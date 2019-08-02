@@ -22,6 +22,29 @@ echo "Patch ...."
 echo "executing ..."
 echo ""
 
+apache_stat() {
+       echo "Checking Apache..."
+       if [ "$(apachectl status)" = 0 ];then
+         echo "Apache is enabled stopping now ..."
+         apachectl stop
+       else
+         echo "Apache is stopped"
+
+      fi
+}
+
+tomcat_stat() {
+         echo "Checking Tomcat..."
+         if [ "$(systemctl status tomcat.service)" = 0 ];then
+         echo "Tomcat is enabled stopping now ..."
+         systemctl stop tomcat.service
+       else
+         echo "Tomcat is stopped"
+
+      fi
+}
+
+
 patch_last() {
        val="$(rpm -qa --last|head -n1|awk '{print $1=""; print $0}')"
        echo ${val}
@@ -111,6 +134,8 @@ vmware_tools() {
          fi
 }
 
+apache_stat
+tomcat_stat
 check_OSVER
 patch_last
 boks_disable
