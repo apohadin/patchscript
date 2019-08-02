@@ -48,13 +48,13 @@ check_SatSUB() {
            echo -e "\nProceeding to Patching steps"
          else
              echo -e "\nRe-registering Subscription to Red Hat Satellite.."
-             echo "subscription-manager remove --all"
-             echo "subscription-manager unregister"
-             echo "subscription-manager refresh"
-             echo "subscription-manager status"
-             echo "curl http://10.56.8.29/pub/bootstrap.py | sudo python - --server='amo1rfissatsm01.cust.au' --location='MEL' --organization='FIS' --activationkey='rhel7' --skip-foreman --force"
-             echo "subscription-manager auto-attach"
-             echo "subscription-manager attach"
+             subscription-manager remove --all
+             subscription-manager unregister
+             subscription-manager refresh
+             subscription-manager status
+             curl http://10.56.8.29/pub/bootstrap.py | sudo python - --server='amo1rfissatsm01.cust.au' --location='MEL' --organization='FIS' --activationkey='rhel7' --skip-foreman --force"
+             subscription-manager auto-attach
+             subscription-manager attach
          fi  
        fi 
       echo "subscription-manager status"
@@ -65,7 +65,7 @@ check_SatSUB() {
 boks_disable() {
          if [ -f /usr/boksm/lib/sysreplace ];then
          echo -e "\nDisable BoKs Authentication ...\n"
-         echo "/usr/boksm/lib/sysreplace restore"
+         /usr/boksm/lib/sysreplace restore
          else
            echo "This Server is not Boks managed"
          fi
@@ -74,10 +74,10 @@ boks_disable() {
 patch_stat() {
          if [ -f /bin/yum ];then
          echo -e "Using yum utility to update server ...\n"
-         echo "yum update -y"
+         yum update -y
          elif [ -f /usr/bin/yum ];then
              echo -e "Using yum utility to update server ...\n"
-              echo "yum update -y"
+             yum update -y
          else 
             echo "This is not a Red Hat Machine"
          fi     
@@ -86,7 +86,7 @@ patch_stat() {
 boks_enable() {
         if [ -f /usr/boksm/lib/sysreplace ];then
         echo -e "\nDisable BoKs Authentication ...\n"
-        echo "/usr/boksm/lib/sysreplace replace"
+        /usr/boksm/lib/sysreplace replace
         else
           echo "This Server is not Boks managed"
         fi
@@ -100,7 +100,7 @@ vmware_tools() {
            echo -e "\nCalling 'vmware-config-tools.pl' utility ..."
           
           if [ -f /usr/bin/vmware-config-tools.pl ]; then
-             echo " /usr/bin/vmware-config-tools.pl"
+              /usr/bin/vmware-config-tools.pl
           else
              echo "WARNING!!! vmware tools is not installed!!"
           fi
