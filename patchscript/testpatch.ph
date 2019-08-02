@@ -38,7 +38,7 @@ check_SatSUB() {
              echo "subscription-manager attach"
          fi  
        fi 
-      echo "subscription-manager status"
+      echo "Centos OS Please Check Repository"
  fi
 }
 
