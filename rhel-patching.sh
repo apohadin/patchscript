@@ -70,6 +70,16 @@ check_SatSUB() {
            echo -e "\nSubscription is in current status"
            echo -e "\nProceeding to Patching steps"
          else
+            if [ cat /etc/redhat-release |grep 6 -eq 0 ];then
+              echo -e "\nRe-registering Subscription to Red Hat Satellite.."
+             subscription-manager remove --all
+             subscription-manager unregister
+             subscription-manager refresh
+             subscription-manager status
+             curl http://10.56.8.29/pub/bootstrap.py | sudo python - --server='amo1rfissatsm01.cust.au' --location='MEL' --organization='FIS' --activationkey='rhel6' --skip-foreman --force"
+             subscription-manager auto-attach
+             subscription-manager attach
+           else
              echo -e "\nRe-registering Subscription to Red Hat Satellite.."
              subscription-manager remove --all
              subscription-manager unregister
@@ -78,6 +88,7 @@ check_SatSUB() {
              curl http://10.56.8.29/pub/bootstrap.py | sudo python - --server='amo1rfissatsm01.cust.au' --location='MEL' --organization='FIS' --activationkey='rhel7' --skip-foreman --force"
              subscription-manager auto-attach
              subscription-manager attach
+           fi
          fi  
        fi 
       echo "subscription-manager status"
